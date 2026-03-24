@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Dashboard</title>
+    <meta name="description" content="A premium modern web dashboard application">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="ph-fill ph-hexagon logo-icon"></i>
+                <h2>Nexus</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active"><a href="#"><i class="ph ph-squares-four"></i> Dashboard</a></li>
+                    <li><a href="#"><i class="ph ph-users"></i> Users</a></li>
+                    <li><a href="#"><i class="ph ph-chart-line-up"></i> Analytics</a></li>
+                    <li><a href="#"><i class="ph ph-folders"></i> Projects</a></li>
+                    <li><a href="#"><i class="ph ph-gear"></i> Settings</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="btn-logout"><i class="ph ph-sign-out"></i> Logout</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="search-bar">
+                    <i class="ph ph-magnifying-glass"></i>
+                    <input type="text" placeholder="Search anything...">
+                </div>
+                <div class="header-actions">
+                    <button class="btn-icon"><i class="ph ph-bell"></i></button>
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=Admin+User&background=6366f1&color=fff" alt="User Avatar">
+                        <div class="user-info">
+                            <span class="name">Jane Doe</span>
+                            <span class="role">Administrator</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-wrapper">
+                <div class="welcome-banner">
+                    <div>
+                        <h1>Welcome back, Jane! 👋</h1>
+                        <p>Here's what's happening with your projects today.</p>
+                    </div>
+                    <button class="btn-primary" id="openModalBtn"><i class="ph ph-plus"></i> New Entry</button>
+                </div>
+
+                <!-- KPI Cards -->
+                <div class="kpi-grid">
+                    <div class="kpi-card glassmorphism">
+                        <div class="kpi-icon blue"><i class="ph ph-users"></i></div>
+                        <div class="kpi-info">
+                            <h3>Total Users</h3>
+                            <h2>1,245</h2>
+                            <span class="trend positive"><i class="ph ph-trend-up"></i> 12% vs last month</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card glassmorphism">
+                        <div class="kpi-icon purple"><i class="ph ph-currency-dollar"></i></div>
+                        <div class="kpi-info">
+                            <h3>Total Revenue</h3>
+                            <h2>$34,000</h2>
+                            <span class="trend positive"><i class="ph ph-trend-up"></i> 8% vs last month</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card glassmorphism">
+                        <div class="kpi-icon orange"><i class="ph ph-clock"></i></div>
+                        <div class="kpi-info">
+                            <h3>Avg Session</h3>
+                            <h2>4m 32s</h2>
+                            <span class="trend negative"><i class="ph ph-trend-down"></i> 2% vs last month</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Entry Form Modal -->
+    <div class="modal-overlay" id="entryModal">
+        <div class="modal-container glassmorphism">
+            <div class="modal-header">
+                <h2>New Entry Ticket</h2>
+                <button class="btn-close" id="closeModalBtn"><i class="ph ph-x"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="entryForm">
+                    <div class="form-group">
+                        <label for="userName">Full Name</label>
+                        <div class="input-wrapper">
+                            <i class="ph ph-user"></i>
+                            <input type="text" id="userName" placeholder="Enter full name" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="userMobile">Mobile Number</label>
+                        <div class="input-wrapper">
+                            <i class="ph ph-device-mobile"></i>
+                            <input type="tel" id="userMobile" placeholder="e.g. +1 234 567 8900" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="userIssue">Describe the Issue</label>
+                        <div class="input-wrapper">
+                            <i class="ph ph-chat-text"></i>
+                            <textarea id="userIssue" placeholder="What requires attention?" rows="4" required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancelModalBtn">Cancel</button>
+                        <button type="submit" class="btn-primary">Submit Entry</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- App Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
