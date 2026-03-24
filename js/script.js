@@ -1,4 +1,22 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    // ======== AUTHENTICATION GUARD ========
+    // Make sure we have a valid session before showing the dashboard
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    
+    // If not logged in, immediately kick them to login screen
+    if (!session) {
+        window.location.href = 'login.html';
+        return;
+    }
+    
+    // Update the UI with their email prefix
+    const userEmail = session.user.email;
+    const userNameElement = document.querySelector('.user-info .name');
+    if (userNameElement) {
+        userNameElement.textContent = userEmail.split('@')[0];
+    }
+    // ======================================
+
     console.log("Modern Dashboard Initialized successfully! 🚀");
 
     // Navigation Interactivity
@@ -7,14 +25,21 @@ document.addEventListener('DOMContentLoaded', () => {
     navItems.forEach(item => {
         item.addEventListener('click', (e) => {
             e.preventDefault();
-            
-            // Remove active class from all
             navItems.forEach(nav => nav.classList.remove('active'));
-            
-            // Add active class to clicked item
             item.classList.add('active');
         });
     });
+
+    // Handle Logout Button
+    const btnLogout = document.querySelector('.btn-logout');
+    if (btnLogout) {
+        btnLogout.addEventListener('click', async () => {
+            await supabaseClient.auth.signOut();
+            window.location.href = 'login.html';
+        });
+    }
+
+
 
     // Modal & Form Interaction
     const modal = document.getElementById('entryModal');

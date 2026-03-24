@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Modern Dashboard</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+            background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.15), transparent 60%),
+                        radial-gradient(circle at bottom left, rgba(236, 72, 153, 0.1), transparent 60%);
+        }
+        .login-box {
+            width: 100%;
+            max-width: 440px;
+            padding: 48px;
+            text-align: center;
+        }
+        .login-logo {
+            font-size: 56px;
+            color: var(--primary);
+            margin-bottom: 16px;
+            filter: drop-shadow(0 0 16px rgba(99, 102, 241, 0.6));
+        }
+        .login-box h2 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        .login-box p {
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            font-size: 15px;
+        }
+        .form-group {
+            text-align: left;
+            margin-bottom: 24px;
+        }
+        .form-group label {
+            margin-left: 4px;
+        }
+        .btn-full {
+            width: 100%;
+            justify-content: center;
+            padding: 16px;
+            font-size: 16px;
+            margin-top: 16px;
+        }
+        .login-footer {
+            margin-top: 24px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        .login-footer a {
+            color: var(--primary);
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+        .error-message {
+            color: var(--danger);
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            margin-bottom: 24px;
+            display: none;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box glassmorphism">
+            <i class="ph-fill ph-hexagon login-logo"></i>
+            <h2>Welcome Back</h2>
+            <p>Enter your credentials to access the dashboard</p>
+
+            <div id="errorMessage" class="error-message"></div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="userEmail">Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="ph ph-envelope"></i>
+                        <input type="email" id="userEmail" placeholder="admin@example.com" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="userPassword">Password</label>
+                    <div class="input-wrapper">
+                        <i class="ph ph-lock"></i>
+                        <input type="password" id="userPassword" placeholder="••••••••" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary btn-full">Sign In</button>
+            </form>
+            <div class="login-footer">
+                <span>Don't have an account? </span><a id="btnSignUp">Sign up</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/login.js"></script>
+</body>
+</html>
