@@ -36,7 +36,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (error) throw error;
             
             const { data: profile, error: profileErr } = await supabaseClient.from('profiles').select('role').eq('id', data.user.id).single();
-            if (profileErr || !profile) throw new Error("Could not verify user role.");
+            if (profileErr) throw new Error(`Database Error: ${profileErr.message}`);
+            if (!profile) throw new Error("No profile found for this user in the database.");
 
             // Login successful, route based on role
             if (profile.role === 'admin') {
