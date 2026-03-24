@@ -66,6 +66,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
                 if (error) throw error;
                 
+                // Log request in our completely visible custom table
+                const { error: dbError } = await supabaseClient
+                    .from('signup_requests')
+                    .insert([{ email: email }]);
+                
+                if (dbError) console.error("Could not log to custom table:", dbError.message);
+                
                 alert("Sign up successful! You can now sign in with your credentials.");
                 
                 // Switch back to login mode
