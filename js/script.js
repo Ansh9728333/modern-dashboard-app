@@ -90,19 +90,32 @@ document.addEventListener('DOMContentLoaded', async () => {
             const mobile = document.getElementById('userMobile').value;
             const issue = document.getElementById('userIssue').value;
 
-            // Save data to Supabase table 'tickets'
-            const { data, error } = await supabaseClient
-                .from('tickets')
-                .insert([
-                    { name: name, mobile: mobile, issue: issue }
-                ]);
+            // 9. Securely gather JWT Session token
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            const token = session?.access_token;
+            if (!token) throw new Error("401 Unauthorized: You are not logged in.");
 
-            if (error) throw error;
+            // 10. Call Admin-only POST endpoint securely
+            const res = await fetch('/api/adminData', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ name, mobile, issue })
+            });
 
-            console.log("New Entry Saved Successfully:", data);
+            const responseData = await res.json();
+
+            // 7. Read clear API errors (401, 403, 422) directly from our backend
+            if (!res.ok) {
+                throw new Error(responseData.error || 'Unknown Server Error');
+            }
+
+            console.log("Secure Entry Passed Validation and Saved:", responseData.data);
             
             // Show success alert
-            alert(`Success! Entry saved safely to Supabase for ${name}.`);
+            alert(`Success! Admin entry stored securely for ${name}.`);
             
             closeModal();
         } catch (error) {
