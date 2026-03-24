@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Dashboard</title>
+    <meta name="description" content="A premium modern web dashboard application">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="ph-fill ph-hexagon logo-icon"></i>
+                <h2>Nexus</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active"><a href="#"><i class="ph ph-squares-four"></i> Dashboard</a></li>
+                    <li><a href="#"><i class="ph ph-users"></i> Users</a></li>
+                    <li><a href="#"><i class="ph ph-chart-line-up"></i> Analytics</a></li>
+                    <li><a href="#"><i class="ph ph-folders"></i> Projects</a></li>
+                    <li><a href="#"><i class="ph ph-gear"></i> Settings</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="btn-logout"><i class="ph ph-sign-out"></i> Logout</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="search-bar">
+                    <i class="ph ph-magnifying-glass"></i>
+                    <input type="text" placeholder="Search anything...">
+                </div>
+                <div class="header-actions">
+                    <button class="btn-icon"><i class="ph ph-bell"></i></button>
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=Admin+User&background=6366f1&color=fff" alt="User Avatar">
+                        <div class="user-info">
+                            <span class="name">Jane Doe</span>
+                            <span class="role">Administrator</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-wrapper">
+                <div class="welcome-banner">
+                    <div>
+                        <h1>Welcome back, Jane! 👋</h1>
+                        <p>Here's what's happening with your projects today.</p>
+                    </div>
+                    <button class="btn-primary" id="openModalBtn"><i class="ph ph-plus"></i> New Entry</button>
+                </div>
+
+                <!-- KPI Cards -->
+                <div class="kpi-grid">
+                    <div class="kpi-card glassmorphism">
+                        <div class="kpi-icon blue"><i class="ph ph-users"></i></div>
+                        <div class="kpi-info">
+                            <h3>Total Users</h3>
+                            <h2>1,245</h2>
+                            <span class="trend positive"><i class="ph ph-trend-up"></i> 12% vs last month</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card glassmorphism">
+                        <div class="kpi-icon purple"><i class="ph ph-currency-dollar"></i></div>
+                        <div class="kpi-info">
+                            <h3>Total Revenue</h3>
+                            <h2>$34,000</h2>
+                            <span class="trend positive"><i class="ph ph-trend-up"></i> 8% vs last month</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card glassmorphism">
+                        <div class="kpi-icon orange"><i class="ph ph-clock"></i></div>
+                        <div class="kpi-info">
+                            <h3>Avg Session</h3>
+                            <h2>4m 32s</h2>
+                            <span class="trend negative"><i class="ph ph-trend-down"></i> 2% vs last month</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Management Section (Admin Only) -->
+                <div class="admin-section" id="userManagementSection" style="margin-top: 40px; animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;">
+                    <div class="section-header" style="display: flex; justify-content: space-between; margin-bottom: 24px; align-items: center;">
+                        <h2 style="font-size: 24px; letter-spacing: -0.5px;">Employee Management</h2>
+                        <button class="btn-primary" id="btnAddEmployee"><i class="ph ph-user-plus"></i> Add Employee</button>
+                    </div>
+                    
+                    <div class="table-container glassmorphism" style="padding: 24px; overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                            <thead>
+                                <tr style="border-bottom: 1px solid var(--border-glass);">
+                                    <th style="padding: 16px; color: var(--text-muted); font-weight: 500; font-size: 14px;">Name</th>
+                                    <th style="padding: 16px; color: var(--text-muted); font-weight: 500; font-size: 14px;">Email Address</th>
+                                    <th style="padding: 16px; color: var(--text-muted); font-weight: 500; font-size: 14px;">Role</th>
+                                    <th style="padding: 16px; color: var(--text-muted); font-weight: 500; font-size: 14px; text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="employeeTableBody">
+                                <tr><td colspan="4" style="padding: 24px; text-align: center; color: var(--text-muted);">Loading active users... <i class="ph ph-spinner ph-spin"></i></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Entry Form Modal -->
+    <div class="modal-overlay" id="entryModal">
+        <div class="modal-container glassmorphism">
+            <div class="modal-header">
+                <h2>New Entry Ticket</h2>
+                <button class="btn-close" id="closeModalBtn"><i class="ph ph-x"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="entryForm">
+                    <div class="form-group">
+                        <label for="userName">Full Name</label>
+                        <div class="input-wrapper">
+                            <i class="ph ph-user"></i>
+                            <input type="text" id="userName" placeholder="Enter full name" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="userMobile">Mobile Number</label>
+                        <div class="input-wrapper">
+                            <i class="ph ph-device-mobile"></i>
+                            <input type="tel" id="userMobile" placeholder="e.g. +1 234 567 8900" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="userIssue">Describe the Issue</label>
+                        <div class="input-wrapper">
+                            <i class="ph ph-chat-text"></i>
+                            <textarea id="userIssue" placeholder="What requires attention?" rows="4" required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancelModalBtn">Cancel</button>
+                        <button type="submit" class="btn-primary">Submit Entry</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Employee Modal -->
+    <div class="modal-overlay" id="addEmployeeModal">
+        <div class="modal-container glassmorphism">
+            <div class="modal-header">
+                <h2>Create Employee</h2>
+                <button class="btn-close" id="closeEmployeeModalBtn"><i class="ph ph-x"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="addEmployeeForm">
+                    <div id="employeeError" class="error-message" style="display: none; color: var(--danger); background: rgba(239,68,68,0.1); padding: 12px; margin-bottom: 20px; border-radius: 12px; border: 1px solid rgba(239,68,68,0.2); font-size: 14px;"></div>
+                    <div class="form-group">
+                        <label for="empName">Full Name</label>
+                        <div class="input-wrapper">
+                            <i class="ph ph-user"></i>
+                            <input type="text" id="empName" placeholder="Employee Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="empEmail">Email Address</label>
+                        <div class="input-wrapper">
+                            <i class="ph ph-envelope"></i>
+                            <input type="email" id="empEmail" placeholder="employee@company.com" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="empPassword">Temporary Password</label>
+                        <div class="input-wrapper">
+                            <i class="ph ph-lock"></i>
+                            <input type="password" id="empPassword" placeholder="Min. 6 characters" required minlength="6">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary" id="submitEmployeeBtn">Create Account</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- App Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

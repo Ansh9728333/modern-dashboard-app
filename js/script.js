@@ -15,6 +15,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (userNameElement) {
         userNameElement.textContent = userEmail.split('@')[0];
     }
+
+    // Role Guard Check
+    const { data: profile } = await supabaseClient.from('profiles').select('role').eq('id', session.user.id).single();
+    
+    // If an employee tries to peek at the admin dashboard, kick them out
+    if (window.location.pathname.includes('admin-dashboard') && profile?.role !== 'admin') {
+        window.location.href = 'employee-dashboard.html';
+        return;
+    }
     // ======================================
 
     console.log("Modern Dashboard Initialized successfully! 🚀");

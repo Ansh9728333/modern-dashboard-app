@@ -2,7 +2,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Check if user is already logged in, if so bypass login
     const { data: { session } } = await supabaseClient.auth.getSession();
     if (session) {
-        window.location.href = 'index.html'; // Redirect to dashboard
+        const { data: profile } = await supabaseClient.from('profiles').select('role').eq('id', session.user.id).single();
+        if (profile?.role === 'admin') {
+            window.location.href = 'admin-dashboard.html';
+        } else {
+            window.location.href = 'employee-dashboard.html';
+        }
         return;
     }
 
@@ -30,8 +35,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
             if (error) throw error;
             
-            // Login successful, redirect to dashboard
-            window.location.href = 'index.html';
+            const { data: profile, error: profileErr } = await supabaseClient.from('profiles').select('role').eq('id', data.user.id).single();
+            if (profileErr || !profile) throw new Error("Could not verify user role.");
+
+            // Login successful, route based on role
+            if (profile.role === 'admin') {
+                window.location.href = 'admin-dashboard.html';
+            } else {
+                window.location.href = 'employee-dashboard.html';
+            }
         } catch (error) {
             errorMessage.textContent = error.message;
             errorMessage.style.display = 'block';
