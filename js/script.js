@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // If not logged in, immediately kick them to login screen
     if (!session) {
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
         return;
     }
     
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (btnLogout) {
         btnLogout.addEventListener('click', async () => {
             await supabaseClient.auth.signOut();
-            window.location.href = 'login.html';
+            window.location.href = 'index.html';
         });
     }
 
