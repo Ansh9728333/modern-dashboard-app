@@ -91,6 +91,29 @@
                     </div>
                 </div>
 
+                <!-- Tickets Data Viewer -->
+                <div class="admin-section" id="dataManagementSection" style="margin-top: 40px; animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;">
+                    <div class="section-header" style="display: flex; justify-content: space-between; margin-bottom: 24px; align-items: center;">
+                        <h2 style="font-size: 24px; letter-spacing: -0.5px;">Submitted Tickets</h2>
+                    </div>
+                    
+                    <div class="table-container glassmorphism" style="padding: 24px; overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                            <thead>
+                                <tr style="border-bottom: 1px solid var(--border-glass);">
+                                    <th style="padding: 16px; color: var(--text-muted); font-weight: 500; font-size: 14px;">Date Issued</th>
+                                    <th style="padding: 16px; color: var(--text-muted); font-weight: 500; font-size: 14px;">Full Name</th>
+                                    <th style="padding: 16px; color: var(--text-muted); font-weight: 500; font-size: 14px;">Mobile Number</th>
+                                    <th style="padding: 16px; color: var(--text-muted); font-weight: 500; font-size: 14px;">Issue Description</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ticketsTableBody">
+                                <tr><td colspan="4" style="padding: 24px; text-align: center; color: var(--text-muted);">Fetching securely... <i class="ph ph-spinner ph-spin"></i></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
                 <!-- User Management Section (Admin Only) -->
                 <div class="admin-section" id="userManagementSection" style="margin-top: 40px; animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;">
                     <div class="section-header" style="display: flex; justify-content: space-between; margin-bottom: 24px; align-items: center;">

@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const addEmployeeForm = document.getElementById('addEmployeeForm');
     const employeeTableBody = document.getElementById('employeeTableBody');
     const employeeError = document.getElementById('employeeError');
+    const ticketsTableBody = document.getElementById('ticketsTableBody');
 
     // Modal Toggles
     if (btnAddEmployee) btnAddEmployee.addEventListener('click', () => addEmployeeModal.classList.add('active'));
@@ -138,6 +139,50 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
+    // Fetch Tickets from API
+    const loadTickets = async () => {
+        if (!ticketsTableBody) return;
+        
+        try {
+            const token = await getAuthToken();
+            const res = await fetch('/api/getTickets', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const { data: tickets, error } = await res.json();
+            
+            if (!res.ok) throw new Error(error || 'Failed to fetch tickets');
+            
+            ticketsTableBody.innerHTML = '';
+            
+            if (!tickets || Object.keys(tickets).length === 0) {
+                ticketsTableBody.innerHTML = `<tr><td colspan="4" style="padding: 24px; text-align: center; color: var(--text-muted);">No tickets submitted yet.</td></tr>`;
+                return;
+            }
+
+            tickets.forEach(ticket => {
+                const tr = document.createElement('tr');
+                tr.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+                tr.style.transition = 'background 0.2s';
+                tr.addEventListener('mouseenter', () => tr.style.background = 'rgba(255,255,255,0.02)');
+                tr.addEventListener('mouseleave', () => tr.style.background = 'transparent');
+                
+                const dateRaw = ticket.created_at ? new Date(ticket.created_at) : new Date();
+                const formattedDate = dateRaw.toLocaleDateString() + ' ' + dateRaw.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+                tr.innerHTML = `
+                    <td style="padding: 16px; color: var(--text-muted); font-size: 13px; white-space: nowrap;">${formattedDate}</td>
+                    <td style="padding: 16px; font-weight: 500;">${ticket.name || 'Unknown'}</td>
+                    <td style="padding: 16px; color: var(--text-muted);">${ticket.mobile || '-'}</td>
+                    <td style="padding: 16px; max-width: 400px; line-height: 1.5;">${ticket.issue || '-'}</td>
+                `;
+                ticketsTableBody.appendChild(tr);
+            });
+        } catch (err) {
+            ticketsTableBody.innerHTML = `<tr><td colspan="4" style="color: var(--danger); padding: 24px; text-align: center;">Error: ${err.message}</td></tr>`;
+        }
+    };
+
     // Initial Load execution
     loadUsers();
+    loadTickets();
 });
